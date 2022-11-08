@@ -64,14 +64,6 @@ public class MondrirantTree{
 
     A.setAxe(a <= this.width/(this.width+this.height));
 
-
-
-  }
-
-  //java tout est pointeur
-  public pointer chooseLeaf(AVL B){
-    //On peut couper la feuille?
-      
   }
 /*
   public void chooseColor(kdTree A, kdTree child){
@@ -95,10 +87,36 @@ public class MondrirantTree{
     }
 
     this.listColor.add(A.getColor());
-  }
-
-  public kdTree chooseLeaf(AVL B){
-
   }*/
+
+ 
+  public kdTree chooseLeaf(AVL B){
+    // On peut couper la feuille? => noeud externe
+    // max de poids entre les deux fils
+    int leafWithTheBiggestWeight = B.maximumOfTwoValues(B.leftSon.getInformation, B.rightSon.getInformation);
+    if (leafWithTheBiggestWeight == B.leftSon.getInformation){
+      nodeTemp = new Node();  // garder en memoire le noeud avec le poids le plus faible
+      nodeTemp = B.leftSon;
+
+      //supprimer la feuille la plus lourde
+      removeNodeGiven(B.leftSon, B.leftSon.getInformation);
+
+      //ajouter ses deux fils
+      addNewNode(nodeTemp.leftSon, nodeTemp.leftSon.getInformation);
+      addNewNode(nodeTemp.rightSon, nodeTemp.rightSon.getInformation);
+    }
+    else if (leafWithTheBiggestWeight == B.leftRight.getInformation) {
+      nodeTemp = new Node();  // garder en memoire le noeud avec le poids le plus faible
+      nodeTemp = B.rightSon;
+
+      //supprimer la feuille la plus lourde
+      removeNodeGiven(B.rightSon, B.rightSon.getInformation);
+
+      //ajouter ses deux fils
+      addNewNode(nodeTemp.leftSon, nodeTemp.leftSon.getInformation);
+      addNewNode(nodeTemp.rightSon, nodeTemp.rightSon.getInformation);
+    }
+
+  }
 
 }
