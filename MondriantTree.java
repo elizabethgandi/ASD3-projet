@@ -1,4 +1,4 @@
-import java.awt.Color
+import java.awt.Color;
 
 public class MondrirantTree{
 
@@ -21,7 +21,7 @@ public class MondrirantTree{
     this.memCouleurProba = memCouleurProba;
     this.largeurLigne = largeurLigne;
     this.seed = seed;
-    this.listColor = new List<Color>
+    this.listColor = new List<Color>;
     listColor.add(Color.RED);
     listColor.add(Color.BLUE);
     listColor.add(Color.YELLOW);
@@ -39,9 +39,9 @@ public class MondrirantTree{
         A.setLimDiv(A.getWidth(),A.getHeight());
       }
       this.chooseDivision(A);
-      A.insertion(false));
+      A.insertion(false);
       this.chooseColor(A,A.getLeft());
-      A.insertion(true));
+      A.insertion(true);
       this.chooseColor(A,A.getRight());
       B.insertion(A.getLeft(),A.getLeft().w());
       B.insertion(A.getRight(),A.getRight().w());
@@ -60,7 +60,7 @@ public class MondrirantTree{
     boolean chaxe;
     Random random = new Random(seed);
     double a = random.double();
-    int cut = random.nextInt()
+    int cut = random.nextInt();
 
     A.setAxe(a <= this.width/(this.width+this.height));
 
@@ -68,6 +68,12 @@ public class MondrirantTree{
 
   }
 
+  //java tout est pointeur
+  public pointer chooseLeaf(AVL B){
+    //On peut couper la feuille?
+      
+  }
+/*
   public void chooseColor(kdTree A, kdTree child){
 
     Random random = new Random(seed);
@@ -93,6 +99,6 @@ public class MondrirantTree{
 
   public kdTree chooseLeaf(AVL B){
 
-  }
+  }*/
 
 }

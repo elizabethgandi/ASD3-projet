@@ -15,7 +15,7 @@ public class kdTree{
   private kdTree right;
   private int limXMin,limXSup,limYMin,limYSup; // les limites de division dans les quelles on pourra coupé
   private Pair pointSupLeft;
-
+/*
   public kdTree(int width, int height,long seed){
     this.width = width;
     this.height = height;
@@ -36,6 +36,7 @@ public class kdTree{
   si l'axe est y et b faux alors on calcule les dimension de l'enfant gauche qui représente la division a droite de la coupe
   Ainsi que les limites de la ou il sera possible de coupé dans l'enfant et son point supérieur gauche
   **/
+  /*
   public void calculDim(boolean b){
     if(this.axe){ //because x = true
       if (b){ // enfant haut
@@ -51,7 +52,7 @@ public class kdTree{
       } else { //enfant bas
         // dimension de la division de l'enfant
         this.right.setWidth(this.width);
-        this.right.setHeight(this.pointSupLeft.getY+this.height-this.division));
+        this.right.setHeight(this.pointSupLeft.getY+this.height-this.division);
         //limites de découpe
         this.right.setLimXDiv(this.pointSupLeft.getX(),this.pointSupLeft.getX()+this.left.getWidth());
         this.right.setLimYDiv(this.pointSupLeft.getY(),this.pointSupLeft.getY()+this.left.getHeight());
@@ -62,7 +63,7 @@ public class kdTree{
       if (b) { //enfant gauche
         // dimension de la division de l'enfant
         this.left.setWidth(this.pointSupLeft.getY()-this.division);
-        this.left.setHeight(this.height)
+        this.left.setHeight(this.height);
         //limites de découpe
         this.left.setLimXDiv(this.pointSupLeft.getX(),this.pointSupLeft.getX()+this.left.getWidth());
         this.left.setLimYDiv(this.pointSupLeft.getY(),this.pointSupLeft.getY()+this.left.getHeight());
@@ -85,6 +86,8 @@ public class kdTree{
 
   la procédure intensi l'enfant gauche ou droit et calcule les données utile à son utilisation
   **/
+
+  /*
   public void insertion(boolean b){
     if(b){
       this.left = new kdTree(A.getSeed());
@@ -96,7 +99,7 @@ public class kdTree{
   }
 
   public double w(){
-    return this.width*this.height/Math.pow(this.width+this.height,1.5)
+    return this.width*this.height/Math.pow(this.width+this.height,1.5);
   }
 
   public Color getColor(){
@@ -143,6 +146,6 @@ public class kdTree{
   public void setLimYDiv(int yMin,int ySup){
     this.limYMin = yMin;
     this.limYSup = ySup;
-  }
+  }*/
 
 }

@@ -5,7 +5,7 @@ public class Pair{
   int x;
   int y;
 
-
+/*
   public Pair(Pair dim,boolean selec){
     this.dim = dim;
     this.selec = selec;
@@ -32,5 +32,5 @@ public class Pair{
   public int getY(){
     return this.Y;
   }
-
+*/
 }
