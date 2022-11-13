@@ -9,9 +9,9 @@ public class kdTree{
   private int height;
   private int division; // coordonée de l'axe de découpe
   private long seed;
-  private int isRoot;
-  private boolean isExtern;
-  private kdtree left;
+  private boolean isRoot;
+  private boolean isExtern; //feuille
+  private kdTree left;
   private kdTree right;
   private int limXMin,limXSup,limYMin,limYSup; // les limites de division dans les quelles on pourra coupé
   private Pair pointSupLeft;
@@ -39,6 +39,7 @@ public class kdTree{
   public void calculDim(boolean b){
     if(this.axe){ //because x = true
       if (b){ // enfant haut
+        this.left = new kdTree(this.seed);// pour être sur d'instancier l'enfant au bonne endroit
         // dimension de la division de l'enfant
         this.left.setWidth(this.width);
         this.left.setHeight(this.division - this.pointSupLeft.getY());
@@ -46,29 +47,31 @@ public class kdTree{
         this.left.setLimXDiv(this.pointSupLeft.getX(),this.pointSupLeft.getX()+this.left.getWidth());
         this.left.setLimYDiv(this.pointSupLeft.getY(),this.pointSupLeft.getY()+this.left.getHeight());
         // pointSupLeft de l'enfant
-        this.left.setPointSupLeft(this.pointSupLeft.getX(),this.pointSupLeft.getY());
-
+        this.left.getPointSupLeft().setXY(this.pointSupLeft.getX(),this.pointSupLeft.getY());
       } else { //enfant bas
+        this.right = new kdTree(this.seed);// pour être sur d'instancier l'enfant au bonne endroit
         // dimension de la division de l'enfant
         this.right.setWidth(this.width);
-        this.right.setHeight(this.pointSupLeft.getY+this.height-this.division));
+        this.right.setHeight(this.pointSupLeft.getY()+this.height-this.division);
         //limites de découpe
         this.right.setLimXDiv(this.pointSupLeft.getX(),this.pointSupLeft.getX()+this.left.getWidth());
         this.right.setLimYDiv(this.pointSupLeft.getY(),this.pointSupLeft.getY()+this.left.getHeight());
         // pointSupLeft de l'enfant
-        this.right.setPointSupLeft(this.pointSupLeft.getX(),this.pointSupLeft.getY()+this.right.getHeight());
+        this.right.getPointSupLeft().setXY(this.pointSupLeft.getX(),this.pointSupLeft.getY()+this.right.getHeight());
       }
     } else { //parceque y = false
       if (b) { //enfant gauche
+        this.left = new kdTree(this.seed);// pour être sur d'instancier l'enfant au bonne endroit
         // dimension de la division de l'enfant
         this.left.setWidth(this.pointSupLeft.getY()-this.division);
-        this.left.setHeight(this.height)
+        this.left.setHeight(this.height);
         //limites de découpe
         this.left.setLimXDiv(this.pointSupLeft.getX(),this.pointSupLeft.getX()+this.left.getWidth());
         this.left.setLimYDiv(this.pointSupLeft.getY(),this.pointSupLeft.getY()+this.left.getHeight());
         // pointSupLeft de l'enfant
-        this.left.setPointSupLeft(this.pointSupLeft.getX(),this.pointSupLeft.getY());
+        this.left.getPointSupLeft().setXY(this.pointSupLeft.getX(),this.pointSupLeft.getY());
       } else {// enfant droite
+        this.right = new kdTree(this.seed);// pour être sur d'instancier l'enfant au bonne endroit
         // dimension de la division de l'enfant
         this.right.setWidth(this.width-(this.division-this.pointSupLeft.getX()));
         this.right.setHeight(this.height);
@@ -76,7 +79,7 @@ public class kdTree{
         this.right.setLimXDiv(this.pointSupLeft.getX(),this.pointSupLeft.getX()+this.left.getWidth());
         this.right.setLimYDiv(this.pointSupLeft.getY(),this.pointSupLeft.getY()+this.left.getHeight());
         // pointSupLeft de l'enfant
-        this.right.setPointSupLeft(this.pointSupLeft.getX()+this.right.getWidth(),this.pointSupLeft.getY());
+        this.right.getPointSupLeft().setXY(this.pointSupLeft.getX()+this.right.getWidth(),this.pointSupLeft.getY());
       }
     }
   }
@@ -87,20 +90,22 @@ public class kdTree{
   **/
   public void insertion(boolean b){
     if(b){
-      this.left = new kdTree(A.getSeed());
       this.calculDim(false);
     } else {
-      this.right = new kdTree(A.getSeed());
-      this.right = this.calculDim(true);
+      this.calculDim(true);
     }
   }
 
   public double w(){
-    return this.width*this.height/Math.pow(this.width+this.height,1.5)
+    return this.width*this.height/Math.pow(this.width+this.height,1.5);
   }
 
   public Color getColor(){
     return this.divColor;
+  }
+
+  public boolean  getAxe(){
+    return this.axe;
   }
 
   public kdTree getLeft(){
@@ -119,20 +124,52 @@ public class kdTree{
     return this.height;
   }
 
-  public int getLimX(){
-    return this.limX;
+  public boolean getIsRoot(){
+    return this.isRoot;
   }
 
-  public int getLimY(){
-    return this.LimY;
+  public int getLimXMin(){
+    return this.limXMin;
+  }
+
+  public int getLimXSup(){
+    return this.limXSup;
+  }
+
+  public int getLimYMin(){
+    return this.limYMin;
+  }
+
+  public int getLimYSup(){
+    return this.limYSup;
   }
 
   public long getSeed(){
     return this.seed;
   }
 
+  public Pair getPointSupLeft(){
+    return this.pointSupLeft;
+  }
+
+  public void setAxe(boolean axe){
+    this.axe = axe;
+  }
+
+  public void setIsextern(boolean extern){
+    this.isExtern = extern;
+  }
+
+  public void setWidth(int width){
+    this.width = width;
+  }
+
+  public void setHeight(int height){
+    this.height = height;
+  }
+
   public void setColor(Color colo){
-    this.divColor = color;
+    this.divColor = colo;
   }
 
   public void setLimXDiv(int xMin,int xSup){
@@ -143,6 +180,10 @@ public class kdTree{
   public void setLimYDiv(int yMin,int ySup){
     this.limYMin = yMin;
     this.limYSup = ySup;
+  }
+
+  public void SetDivision(int division){
+    this.division = division;
   }
 
 }
