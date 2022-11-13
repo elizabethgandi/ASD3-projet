@@ -6,14 +6,14 @@ public class MondrirantTree{
   private int nbleaf;
   private int minDimensionCoupe;
   private float memCouleurProba;
-  private float largeurLigne;
+  private float largeurLigne; //widthLine?
   private long seed;
   private List<Color> listColor;
   private kdArbre C; //pointeur de reserve.
 
 
 
-  public MondrirantTree(width,height,nbleaf,minDimensionCoupe,memCouleurProba,largeurLigne,seed){
+  public MondrirantTree(int width, int height, int nbleaf, int minDimensionCoupe, int memCouleurProba, int largeurLigne, int seed){
     this.width = width;
     this.height = height;
     this.nbleaf = nbleaf;
@@ -21,7 +21,7 @@ public class MondrirantTree{
     this.memCouleurProba = memCouleurProba;
     this.largeurLigne = largeurLigne;
     this.seed = seed;
-    this.listColor = new List<Color>;
+    this.listColor = new List<Color> ();
     listColor.add(Color.RED);
     listColor.add(Color.BLUE);
     listColor.add(Color.YELLOW);
@@ -59,7 +59,7 @@ public class MondrirantTree{
   public void chooseDivision(kdTree A){
     boolean chaxe;
     Random random = new Random(seed);
-    double a = random.double();
+    double a = random.doble();
     int cut = random.nextInt();
 
     A.setAxe(a <= this.width/(this.width+this.height));
@@ -88,6 +88,80 @@ public class MondrirantTree{
 
     this.listColor.add(A.getColor());
   }*/
+
+
+  // VERIFIER LES CALCULS!! + faire une méthode qui regarde si un des points
+  // x1, x2, x3, et x4 est frontalier
+  
+  public BufferedImage toImage(MondrirantTree mTree){
+
+    //obtenir les coordonées X,Y du point superieur gauche pour pouvoir faire nos calculs
+    int pointSupLeftX = mTree.getX();
+    int pointSupLeftY = mTree.getY();
+
+    //Color col = chooseColor(mTree, ?);
+
+    //éviter de faire des rappels à chaque fois
+    int addWidthLine = 1/2*largeurLigne;
+
+    // 1. Si le noeud est une feuille => on coupe
+    // ligne grise c'est largeurLigne widthLine?
+
+    // 1.1. n'est pas frontalier (if)
+    /*
+    int x1 = pointSupLeftX  + addWidthLine;                  //startX
+    int x2 = (pointSupLeftX + mTree.width) - addWidthLine;   //endX A VERIFIER mTree.width
+    int x3 = pointSupLeftY  + addWidthLine;                  //startY
+    int x4 = pointSupLeftY  + mTree.heigth + addWidthLine;   //endY
+    mTree.setRectangle(x1, x2, x3, x4, col);
+
+    // 1.2. est frontalier (else)
+    // 1.2.1 côté gauche (if)
+
+    int x1 = pointSupLeftX;                
+    int x2 = (pointSupLeftX + mTree.width) - addWidthLine;   
+    int x3 = pointSupLeftY;                  
+    int x4 = pointSupLeftY  + mTree.heigth + addWidthLine;   
+
+    mTree.setRectangle(x1, x2, x3, x4, col);
+
+    // 1.2.2 côté dessus (else if)
+
+    int x1 = pointSupLeftX ;                  
+    int x2 = (pointSupLeftX + mTree.width) ;   
+    int x3 = pointSupLeftY  + addWidthLine;                  
+    int x4 = pointSupLeftY  + mTree.heigth + addWidthLine; 
+
+    mTree.setRectangle(x1, x2, x3, x4, col);
+
+    // 1.2.3 côté droit (else if)
+
+    int x1 = pointSupLeftX  + addWidthLine;                  
+    int x2 = (pointSupLeftX + mTree.width);   
+    int x3 = pointSupLeftY  + addWidthLine;                  
+    int x4 = pointSupLeftY  + mTree.heigth;   
+
+    mTree.setRectangle(x1, x2, x3, x4, col);
+
+    // 1.2.4 côté dessous (else)
+
+    int x1 = pointSupLeftX  + addWidthLine;                  
+    int x2 = (pointSupLeftX + mTree.width) - addWidthLine;   
+    int x3 = pointSupLeftY  ;                  
+    int x4 = pointSupLeftY  + mTree.heigth ;   
+
+    mTree.setRectangle(x1, x2, x3, x4, col);
+
+    */
+    // 2. Si le noeud est interne => on se déplace dans l'arbre
+
+    // 2.1 côté gauche
+    toImage(mTree.fg);
+
+    //2.2 côté droit
+    toImage(mTree.fd);
+
+  }
 
  
   public kdTree chooseLeaf(AVL B){
