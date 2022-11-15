@@ -51,6 +51,7 @@ public class MondriantTree{
       this.chooseColor(A,A.getLeft());
       A.insertion(true);
       this.chooseColor(A,A.getRight());
+      //test si on peut diviser les feuilles? => optimisation passer de nlogn à logn dans le pire cas
       B.insertion(A.getLeft(),A.getLeft().w());
       B.insertion(A.getRight(),A.getRight().w());
       this.C = this.chooseLeaf(B);// B un AVL faire une condition pour verifier que ce que l'on va decouper est bien une feuille
@@ -149,6 +150,7 @@ public class MondriantTree{
 
     // 1.2. est frontalier (else)
     // 1.2.1 côté gauche (if)
+    if(A.getWidth() == this.width - (A.getPointSupLeft().getX()+A.getWidth())){// alors la division est frontaliere et a gauche
 
     int x1 = pointSupLeftX;                
     int x2 = (pointSupLeftX + mTree.width) - addWidthLine;   
@@ -158,6 +160,7 @@ public class MondriantTree{
     mTree.setRectangle(x1, x2, x3, x4, col);
 
     // 1.2.2 côté dessus (else if)
+    if(A.getHeight() == this.height - (A.getPointSupLeft().getY()+A.getHeight())){// alors la division est frontaliere et en haut
 
     int x1 = pointSupLeftX ;                  
     int x2 = (pointSupLeftX + mTree.width) ;   
@@ -167,6 +170,7 @@ public class MondriantTree{
     mTree.setRectangle(x1, x2, x3, x4, col);
 
     // 1.2.3 côté droit (else if)
+    if(A.getPointSupLeft().getX()-this.width == A.getWidth()){ // alors la division est frontaliere et a droite
 
     int x1 = pointSupLeftX  + addWidthLine;                  
     int x2 = (pointSupLeftX + mTree.width);   
@@ -176,6 +180,7 @@ public class MondriantTree{
     mTree.setRectangle(x1, x2, x3, x4, col);
 
     // 1.2.4 côté dessous (else)
+    if(A.getPointSupLeft().getY()-this.height == A.getHeight()){ // alors la division est frontaliere et en bas
 
     int x1 = pointSupLeftX  + addWidthLine;                  
     int x2 = (pointSupLeftX + mTree.width) - addWidthLine;   
@@ -220,6 +225,7 @@ public class MondriantTree{
           addNewNode(nodeTemp.rightSon, nodeTemp.rightSon.getInformation);*/
       
         return leafWithTheBiggestWeight;
+
       } else
           return null;
     } 
