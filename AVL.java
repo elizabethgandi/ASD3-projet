@@ -232,4 +232,12 @@ public class AVL {
 
         return rootNodeRemove;
     }
+
+    public kdTree getPointer() {
+        return this.pointer;
+    }
+
+    public void setPointer(kdTree newPointer) {
+        this.pointer = newPointer;
+    }
 }
