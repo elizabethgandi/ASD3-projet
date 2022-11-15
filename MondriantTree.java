@@ -99,7 +99,7 @@ public class MondriantTree{
     }
   }
 
-  public void chooseColor(kdTree A, kdTree child){
+  public void chooseColor(kdTree child){
 
     Random random = new Random(seed);
     double a = random.nextDouble();
@@ -122,17 +122,13 @@ public class MondriantTree{
     this.listColor.add(A.getColor());
   }
 
-
-  // VERIFIER LES CALCULS!! + faire une méthode qui regarde si un des points
-  // x1, x2, x3, et x4 est frontalier
-
   public BufferedImage toImage(MondrirantTree mTree){
 
     //obtenir les coordonées X,Y du point superieur gauche pour pouvoir faire nos calculs
     int pointSupLeftX = mTree.getX();
     int pointSupLeftY = mTree.getY();
 
-    //Color col = chooseColor(mTree, ?);
+    Color col = chooseColor(mTree);
 
     //éviter de faire des rappels à chaque fois
     int addWidthLine = 1/2*largeurLigne;
@@ -140,56 +136,52 @@ public class MondriantTree{
     // 1. Si le noeud est une feuille => on coupe
     // ligne grise c'est largeurLigne widthLine?
 
-    // 1.1. n'est pas frontalier (if)
-    /*
-    int x1 = pointSupLeftX  + addWidthLine;                  //startX
-    int x2 = (pointSupLeftX + mTree.width) - addWidthLine;   //endX A VERIFIER mTree.width
-    int x3 = pointSupLeftY  + addWidthLine;                  //startY
-    int x4 = pointSupLeftY  + mTree.heigth + addWidthLine;   //endY
-    mTree.setRectangle(x1, x2, x3, x4, col);
-
     // 1.2. est frontalier (else)
     // 1.2.1 côté gauche (if)
-    if(A.getWidth() == this.width - (A.getPointSupLeft().getX()+A.getWidth())){// alors la division est frontaliere et a gauche
-
-    int x1 = pointSupLeftX;                
-    int x2 = (pointSupLeftX + mTree.width) - addWidthLine;   
-    int x3 = pointSupLeftY;                  
-    int x4 = pointSupLeftY  + mTree.heigth + addWidthLine;   
-
-    mTree.setRectangle(x1, x2, x3, x4, col);
-
+    if(A.getWidth() == this.width - (A.getPointSupLeft().getX()+A.getWidth())){
+      int x1 = pointSupLeftX;                
+      int x2 = (pointSupLeftX + mTree.width) - addWidthLine;   
+      int x3 = pointSupLeftY;                  
+      int x4 = pointSupLeftY  + mTree.heigth + addWidthLine;   
+      
+      mTree.setRectangle(x1, x2, x3, x4, col);
+    }
     // 1.2.2 côté dessus (else if)
-    if(A.getHeight() == this.height - (A.getPointSupLeft().getY()+A.getHeight())){// alors la division est frontaliere et en haut
+    else if(A.getHeight() == this.height - (A.getPointSupLeft().getY()+A.getHeight())){
+      int x1 = pointSupLeftX ;                  
+      int x2 = (pointSupLeftX + mTree.width) ;   
+      int x3 = pointSupLeftY  + addWidthLine;                  
+      int x4 = pointSupLeftY  + mTree.heigth + addWidthLine; 
 
-    int x1 = pointSupLeftX ;                  
-    int x2 = (pointSupLeftX + mTree.width) ;   
-    int x3 = pointSupLeftY  + addWidthLine;                  
-    int x4 = pointSupLeftY  + mTree.heigth + addWidthLine; 
-
-    mTree.setRectangle(x1, x2, x3, x4, col);
-
+      mTree.setRectangle(x1, x2, x3, x4, col);
+    }
     // 1.2.3 côté droit (else if)
-    if(A.getPointSupLeft().getX()-this.width == A.getWidth()){ // alors la division est frontaliere et a droite
+    else if(A.getPointSupLeft().getX()-this.width == A.getWidth()){ 
+      int x1 = pointSupLeftX  + addWidthLine;                  
+      int x2 = (pointSupLeftX + mTree.width);   
+      int x3 = pointSupLeftY  + addWidthLine;                  
+      int x4 = pointSupLeftY  + mTree.heigth;   
 
-    int x1 = pointSupLeftX  + addWidthLine;                  
-    int x2 = (pointSupLeftX + mTree.width);   
-    int x3 = pointSupLeftY  + addWidthLine;                  
-    int x4 = pointSupLeftY  + mTree.heigth;   
-
-    mTree.setRectangle(x1, x2, x3, x4, col);
-
+      mTree.setRectangle(x1, x2, x3, x4, col);
+    }
     // 1.2.4 côté dessous (else)
-    if(A.getPointSupLeft().getY()-this.height == A.getHeight()){ // alors la division est frontaliere et en bas
+    if(A.getPointSupLeft().getY()-this.height == A.getHeight()){ 
+      int x1 = pointSupLeftX  + addWidthLine;                  
+      int x2 = (pointSupLeftX + mTree.width) - addWidthLine;   
+      int x3 = pointSupLeftY  ;                  
+      int x4 = pointSupLeftY  + mTree.heigth ;   
 
-    int x1 = pointSupLeftX  + addWidthLine;                  
-    int x2 = (pointSupLeftX + mTree.width) - addWidthLine;   
-    int x3 = pointSupLeftY  ;                  
-    int x4 = pointSupLeftY  + mTree.heigth ;   
-
-    mTree.setRectangle(x1, x2, x3, x4, col);
-
-    */
+      mTree.setRectangle(x1, x2, x3, x4, col);
+    }
+    // 1.1. n'est pas frontalier (if)
+    else{
+      int x1 = pointSupLeftX  + addWidthLine;                  //startX
+      int x2 = (pointSupLeftX + mTree.width) - addWidthLine;   //endX A VERIFIER mTree.width
+      int x3 = pointSupLeftY  + addWidthLine;                  //startY
+      int x4 = pointSupLeftY  + mTree.heigth + addWidthLine;   //endY
+    
+      mTree.setRectangle(x1, x2, x3, x4, col);
+    }
     // 2. Si le noeud est interne => on se déplace dans l'arbre
 
     // 2.1 côté gauche
