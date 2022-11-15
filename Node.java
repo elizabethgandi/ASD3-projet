@@ -2,8 +2,8 @@ public class Node {
     private int information;
     private int valueOfTheBalance;
     public int valueOfTheHeight;
-    public Node rightSon;
-    public Node leftSon;
+    public Node rightSon; // a mettre en privé
+    public Node leftSon;  //a mettre en privé
 
     public Node(int information , int valueOfTheHeight){
         this.information       = information;

@@ -1,5 +1,6 @@
 public class AVL {
     public Node root;
+    private kdTree pointer ; 
 
     /* Method which print AVL */
     public void printAVL(Node nodeOfAVLTest) {
@@ -105,7 +106,7 @@ public class AVL {
         return nodeAdd;
     }
 
-    public Node addNewNode(Node nodeAdd, int informationAdd) {
+    public Node addNewNode(kdTree nodeAdd, double informationAdd) {
 
         if (nodeAdd == null)
             return new Node(informationAdd, 0);
@@ -139,6 +140,21 @@ public class AVL {
 
         return minNodeValue;
     }
+
+    public Node max(){
+        return maximumInRightSubTree(this);
+    }
+
+    public Node maximumInRightSubTree(Node root){
+        Node maxNodeValue = root;
+
+        /* Commme l'AVL est trié on est sur que la plus grande valeure est dans la branche tout à droite*/
+        while(maxNodeValue.rightSon != null )
+            maxNodeValue = maxNodeValue.rightSon;
+
+        return maxNodeValue;
+    }
+
 
     public Node removeNodeGiven (Node rootNodeRemove, int valueToRemove){
 
