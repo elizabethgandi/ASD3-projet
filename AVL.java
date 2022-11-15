@@ -1,7 +1,6 @@
 public class AVL {
     
     private kdTree pointer ; 
-    public Node root;
     private int information;
     private int valueOfTheBalance;
     private int valueOfTheHeight;
