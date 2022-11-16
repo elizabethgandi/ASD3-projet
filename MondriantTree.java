@@ -64,7 +64,7 @@ public class MondriantTree{
     }
   }
 
-
+/*
   public void chooseDivision(kdTree A){
     boolean chaxe; // chaxe pour choose axe
     Random random = new Random(seed);
@@ -86,7 +86,7 @@ public class MondriantTree{
       }
     } else {
       if(A.getPointSupLeft().getX()-this.width == A.getWidth()){ // alors la division est frontaliere et a droite
-        int lim = A.getPointSupLeft().getY()+A.getHeight();//pour la clartédu code
+        int lim = A.getPointSupLeft().getY()+A.getHeight();//pour la clarté du code
         A.setLimYDiv(A.getPointSupLeft().getY(),lim-(int)lim*this.proportionCoupe);// pour ne pas couper dans une zone interdite
         A.SetDivision(A.getLimYMin() + random.nextInt(A.getLimYSup()-A.getLimYMin()));
       } else if(A.getWidth() == this.width - (A.getPointSupLeft().getX()+A.getWidth())){// alors la division est frontaliere et a droite
@@ -98,8 +98,8 @@ public class MondriantTree{
       }
     }
   }
-
-  public void chooseColor(kdTree child){
+*/
+  public void chooseColor(kdTree A, kdTree child){
 
     Random random = new Random(seed);
     double a = random.nextDouble();
@@ -128,17 +128,17 @@ public class MondriantTree{
     int pointSupLeftX = mTree.getX();
     int pointSupLeftY = mTree.getY();
 
-    Color col = chooseColor(mTree);
+    Color col = chooseColor(mTree, mTree); //à revoir
 
     //éviter de faire des rappels à chaque fois
-    int addWidthLine = 1/2*largeurLigne;
+    int addWidthLine = (int)(1/2*largeurLigne);
 
     // 1. Si le noeud est une feuille => on coupe
     // ligne grise c'est largeurLigne widthLine?
 
     // 1.2. est frontalier (else)
     // 1.2.1 côté gauche (if)
-    if(A.getWidth() == this.width - (A.getPointSupLeft().getX()+A.getWidth())){
+    if(mTree.getWidth() == this.width - (mTree.getPointSupLeft().getX()+mTree.getWidth())){
       int x1 = pointSupLeftX;                
       int x2 = (pointSupLeftX + mTree.width) - addWidthLine;   
       int x3 = pointSupLeftY;                  
@@ -147,7 +147,7 @@ public class MondriantTree{
       mTree.setRectangle(x1, x2, x3, x4, col);
     }
     // 1.2.2 côté dessus (else if)
-    else if(A.getHeight() == this.height - (A.getPointSupLeft().getY()+A.getHeight())){
+    else if(mTree.getHeight() == this.height - (mTree.getPointSupLeft().getY()+mTree.getHeight())){
       int x1 = pointSupLeftX ;                  
       int x2 = (pointSupLeftX + mTree.width) ;   
       int x3 = pointSupLeftY  + addWidthLine;                  
@@ -156,7 +156,7 @@ public class MondriantTree{
       mTree.setRectangle(x1, x2, x3, x4, col);
     }
     // 1.2.3 côté droit (else if)
-    else if(A.getPointSupLeft().getX()-this.width == A.getWidth()){ 
+    else if(mTree.getPointSupLeft().getX()-this.width == mTree.getWidth()){ 
       int x1 = pointSupLeftX  + addWidthLine;                  
       int x2 = (pointSupLeftX + mTree.width);   
       int x3 = pointSupLeftY  + addWidthLine;                  
@@ -165,7 +165,7 @@ public class MondriantTree{
       mTree.setRectangle(x1, x2, x3, x4, col);
     }
     // 1.2.4 côté dessous (else)
-    if(A.getPointSupLeft().getY()-this.height == A.getHeight()){ 
+    if(mTree.getPointSupLeft().getY()-this.height == mTree.getHeight()){ 
       int x1 = pointSupLeftX  + addWidthLine;                  
       int x2 = (pointSupLeftX + mTree.width) - addWidthLine;   
       int x3 = pointSupLeftY  ;                  
@@ -193,14 +193,13 @@ public class MondriantTree{
   }
 
  
-  public kdTree chooseLeaf(AVL B){
+  public AVL chooseLeaf(AVL B){ //on ne peut pas retourner un kdARbre pck on travaille sur un avl
     // On peut couper la feuille? => noeud externe
 
-    if(!B.getIsExtern()) //dans le cas le cas ou il est egal à true
+    if((B.getLeftSon() != null) && (B.getRightSon() != null)) //on est dans un noeud externe -> NON
       return chooseLeaf(B.removeNodeGiven(B, B.getInformation()));
     
     else{
-
       //on est dans un noeud externe -> OUI
       AVL leafWithTheBiggestWeight = B.max(); //getRightSon()
 

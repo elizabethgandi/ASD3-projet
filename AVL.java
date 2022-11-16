@@ -190,6 +190,20 @@ public class AVL {
     
         return minNodeValue;
     }
+
+    public AVL max(){
+        return maximumInRightSubTree(this);
+    }
+
+    public AVL maximumInRightSubTree(AVL B){
+        AVL maxNodeValue = root;
+    
+        /* Commme l'AVL est trié on est sur que la plus grande valeur est dans la branche tout à droite*/
+        while(maxNodeValue.getRightSon() != null )
+        maxNodeValue = maxNodeValue.getRightSon();
+    
+        return maxNodeValue;
+    }
     
     public AVL removeNodeGiven (AVL rootNodeRemove, int valueToRemove){
     

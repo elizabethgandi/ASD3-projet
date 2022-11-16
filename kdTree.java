@@ -155,7 +155,11 @@ public class kdTree{
     this.axe = axe;
   }
 
-  public void setIsextern(boolean extern){
+  public boolean getIsExtern(){
+    return this.isExtern;
+  }
+
+  public void setIsExtern(boolean extern){
     this.isExtern = extern;
   }
 
