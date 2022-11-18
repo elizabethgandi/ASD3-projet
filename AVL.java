@@ -173,7 +173,7 @@ public class AVL {
         while(maxNodeValue.getRightSon() != null )
             maxNodeValue = maxNodeValue.getRightSon();
 
-        return maxNodeValue;
+        return removeNode(maxNodeValue, maxNodeValue.convertBiggestNodeToDoubleNode(A));
     }
 
     public AVL removeNodeGiven (AVL rootNodeRemove, double valueToRemove){
@@ -239,7 +239,7 @@ public class AVL {
     }
 
     //enlever le noeud le plus gros
-    public AVL removeBiggestNode(AVL A){
+    /*public AVL removeBiggestNode(AVL A){
       if (A.getIsEmpty()){
           return removeBiggestNode(A.getRightSon());
       }
@@ -247,7 +247,7 @@ public class AVL {
           return null;
       }
         return removeNode(A, A.convertBiggestNodeToDoubleNode(A));
-    }
+    }*/
 
     public AVL biggestNodeValueInAvl(AVL A){
 

@@ -144,7 +144,7 @@ public class MondriantTree{
       // On peut couper la feuille? => noeud externe
 
       if(!B.getPointer().getIsExtern()) //dans le cas le cas ou il est egal à true
-        return chooseLeaf(B.removeBiggestNode(B));
+        return chooseLeaf(B.maximumOfRightSubTree(B));
       else{
 
         //on est dans un noeud externe -> OUI
@@ -156,7 +156,7 @@ public class MondriantTree{
           // garder en memoire le noeud avec le poids le plus fort
 
           //supprimer la feuille la plus lourde
-          leafWithTheBiggestWeight.removeBiggestNode(leafWithTheBiggestWeight);
+          leafWithTheBiggestWeight.maximumOfRightSubTree(leafWithTheBiggestWeight);
 
           //ajouter ses deux fils
 
@@ -174,6 +174,7 @@ public class MondriantTree{
       int pointSupLeftY = tree.getPointSupLeft().getY();
 
       //éviter de faire des rappels à chaque fois
+
       int addWidthLine = (int)(1/2*largeurLigne);
 
       if(!tree.getIsExtern()){
