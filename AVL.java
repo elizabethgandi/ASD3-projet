@@ -17,45 +17,6 @@ public class AVL {
       this.isEmpty = true;
     }
 
-    public kdTree getPointer() {
-        return this.pointer;
-    }
-
-    public boolean getIsEmpty(){
-      return this.isEmpty;
-    }
-
-    public int getValueOfTheBalance() {
-        return this.valueOfTheBalance;
-    }
-
-    public void setValueOfTheBalance(int valueOfTheBalance) {
-        this.valueOfTheBalance = valueOfTheBalance;
-    }
-
-    public int getValueOfTheHeight() {
-        return this.valueOfTheHeight;
-    }
-
-    public void setValueOfTheHeight(int valueOfTheHeight) {
-        this.valueOfTheHeight = valueOfTheHeight;
-    }
-
-    public AVL getRightSon() {
-        return this.rightSon;
-    }
-
-    public void setRightSon(AVL rightSon) {
-        this.rightSon = rightSon;
-    }
-
-    public AVL getLeftSon() {
-        return this.leftSon;
-    }
-    public void setLeftSon(AVL leftSon) {
-        this.leftSon = leftSon;
-    }
-
         /* Method which print AVL *//*
     public void printAVL(AVL nodeOfAVLTest) {
 
@@ -190,6 +151,11 @@ public class AVL {
         return sensRotationAVL(balanceValue, A);
     }
 
+    public AVL max(){
+        return this.maximumOfRightSubTree(this);
+      }
+
+
     public AVL minimumInRightSubTree(AVL root){
         AVL minNodeValue = root;
 
@@ -198,10 +164,6 @@ public class AVL {
             minNodeValue = minNodeValue.getLeftSon();
 
         return minNodeValue;
-    }
-
-    public AVL max(){
-      return this.maximumOfRightSubTree(this);
     }
 
     public AVL maximumOfRightSubTree(AVL root){
@@ -271,6 +233,11 @@ public class AVL {
     }
 
 
+    public double convertBiggestNodeToDoubleNode(AVL B){
+        AVL A = biggestNodeValueInAvl(B);
+        return A.getPointer().getWeight();
+    }
+
     //enlever le noeud le plus gros
     public AVL removeBiggestNode(AVL A){
       if (A.getIsEmpty()){
@@ -294,14 +261,9 @@ public class AVL {
         }
         return B;//B.getPointer().getWeight();
     }
-
-    public double convertBiggestNodeToDoubleNode(AVL B){
-        AVL A = biggestNodeValueInAvl(B);
-        return A.getPointer().getWeight();
-    }
     
     //enlver un noeud interne
-
+/*
     public AVL removeNode (AVL rootNodeRemove, double valueToRemove){
 
         if (rootNodeRemove == null)
@@ -323,6 +285,45 @@ public class AVL {
 
         return rootNodeRemove;
     }
+*/
 
+public kdTree getPointer() {
+    return this.pointer;
+}
+
+public boolean getIsEmpty(){
+  return this.isEmpty;
+}
+
+public int getValueOfTheBalance() {
+    return this.valueOfTheBalance;
+}
+
+public void setValueOfTheBalance(int valueOfTheBalance) {
+    this.valueOfTheBalance = valueOfTheBalance;
+}
+
+public int getValueOfTheHeight() {
+    return this.valueOfTheHeight;
+}
+
+public void setValueOfTheHeight(int valueOfTheHeight) {
+    this.valueOfTheHeight = valueOfTheHeight;
+}
+
+public AVL getRightSon() {
+    return this.rightSon;
+}
+
+public void setRightSon(AVL rightSon) {
+    this.rightSon = rightSon;
+}
+
+public AVL getLeftSon() {
+    return this.leftSon;
+}
+public void setLeftSon(AVL leftSon) {
+    this.leftSon = leftSon;
+}
 
 }
