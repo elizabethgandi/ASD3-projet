@@ -13,6 +13,7 @@ public class MondriantTree{
   private long seed;
   private ArrayList<Color> listColor;
   private kdTree C; //pointeur sur la feuille sur laquelle on vas faire des opérations
+  private boolean verif;
 
 
 
@@ -26,12 +27,11 @@ public class MondriantTree{
     this.proportionCoupe = proportionCoupe;
     this.seed = seed;
     this.listColor = new ArrayList<Color>();
-    boolean verif;
-    verif = listColor.add(Color.RED);
-    verif = listColor.add(Color.BLUE);
-    verif = listColor.add(Color.YELLOW);
-    verif = listColor.add(Color.WHITE);
-    verif = listColor.add(Color.BLACK);
+    this.verif = listColor.add(Color.RED);
+    this.verif = listColor.add(Color.BLUE);
+    this.verif = listColor.add(Color.YELLOW);
+    this.verif = listColor.add(Color.WHITE);
+    this.verif = listColor.add(Color.BLACK);
   }
 
 
@@ -41,9 +41,9 @@ public class MondriantTree{
     } else {
       if(A.getIsRoot()){// plus de vérification car là on admet que les opérations vont biense faire
         nbleaf--;
-        B.insertion(A,A.w()); //Attention on ne mettra pas qu'un float dans l'avl mais un couple avec aussi un pointeur vers l'element du kdArbre
-        A.setLimXDiv(this.intConversion(A.getWidth()*this.proportionCoupe),A.getWidth());
-        A.setLimYDiv(this.intConversion(A.getHeight()*this.proportionCoupe),A.getHeight());
+        B.addNewNode(A); //Attention on ne mettra pas qu'un float dans l'avl mais un couple avec aussi un pointeur vers l'element du kdArbre
+        A.setLimXDiv((int)(A.getWidth()*this.proportionCoupe),A.getWidth());
+        A.setLimYDiv((int)(A.getHeight()*this.proportionCoupe),A.getHeight());
 
       }
       this.chooseDivision(A);
@@ -51,11 +51,12 @@ public class MondriantTree{
       this.chooseColor(A,A.getLeft());
       A.insertion(true);
       this.chooseColor(A,A.getRight());
-      //test si on peut diviser les feuilles? => optimisation passer de nlogn à logn dans le pire cas
-      B.insertion(A.getLeft(),A.getLeft().w());
-      B.insertion(A.getRight(),A.getRight().w());
+      if(A.getLeft().getWidth() > this.minDimensionCoupe && A.getLeft().getHeight() > this.minDimensionCoupe)
+        B = B.addNewNode(A.getLeft());
+      if(A.getRight().getWidth() > this.minDimensionCoupe && A.getRight().getHeight() > this.minDimensionCoupe)
+        B = B.addNewNode(A.getRight());
       this.C = this.chooseLeaf(B);// B un AVL faire une condition pour verifier que ce que l'on va decouper est bien une feuille
-      if(C.getWidth() > this.minDimensionCoupe && C.getHeight() > this.minDimensionCoupe){
+      if(C.getWidth() > this.minDimensionCoupe && C.getHeight() > this.minDimensionCoupe && C != null){
         C.setIsextern(false); // cette ligne sert a indiquer que le neoud n'est pas extene et vas être un neoud de coupe
         return generateRandomTree(C,B,nbleaf-1);
       } else {
@@ -64,7 +65,7 @@ public class MondriantTree{
     }
   }
 
-/*
+
   public void chooseDivision(kdTree A){
     boolean chaxe; // chaxe pour choose axe
     Random random = new Random(seed);
@@ -75,37 +76,37 @@ public class MondriantTree{
     if(A.getAxe()){
       if(A.getPointSupLeft().getY()-this.height == A.getHeight()){ // alors la division est frontaliere et en bas
         int lim = A.getPointSupLeft().getX()+A.getWidth(); //pour la clartédu code
-        A.setLimXDiv(A.getPointSupLeft().getX(),lim-(int)this.proportionCoupe*lim);// pour ne pas couper dans une zone interdite
+        A.setLimXDiv(A.getPointSupLeft().getX(),(int)(lim-this.proportionCoupe*lim));// pour ne pas couper dans une zone interdite
         A.SetDivision(A.getLimXMin() + random.nextInt(A.getLimXSup()-A.getLimXMin()));
       }else if(A.getHeight() == this.height - (A.getPointSupLeft().getY()+A.getHeight())){// alors la division est frontaliere et en haut
         int lim = A.getPointSupLeft().getX();//pour la clartédu code
-        A.setLimXDiv(lim+(int)lim*this.proportionCoupe,A.getPointSupLeft().getX()+A.getWidth());// pour ne pas couper dans une zone interdite
+        A.setLimXDiv((int)(lim+lim*this.proportionCoupe),A.getPointSupLeft().getX()+A.getWidth());// pour ne pas couper dans une zone interdite
         A.SetDivision(A.getLimXMin() + random.nextInt(A.getLimXSup()-A.getLimXMin()));
       } else {
         A.SetDivision(A.getLimXMin() + random.nextInt(A.getLimXSup()-A.getLimXMin()));
       }
     } else {
       if(A.getPointSupLeft().getX()-this.width == A.getWidth()){ // alors la division est frontaliere et a droite
-        int lim = A.getPointSupLeft().getY()+A.getHeight();//pour la clarté du code
-        A.setLimYDiv(A.getPointSupLeft().getY(),lim-(int)lim*this.proportionCoupe);// pour ne pas couper dans une zone interdite
+        int lim = A.getPointSupLeft().getY()+A.getHeight();//pour la clartédu code
+        A.setLimYDiv(A.getPointSupLeft().getY(),(int)(lim-lim*this.proportionCoupe));// pour ne pas couper dans une zone interdite
         A.SetDivision(A.getLimYMin() + random.nextInt(A.getLimYSup()-A.getLimYMin()));
       } else if(A.getWidth() == this.width - (A.getPointSupLeft().getX()+A.getWidth())){// alors la division est frontaliere et a droite
         int lim = A.getPointSupLeft().getY();//pour la clartédu code
-        A.setLimYDiv(lim+lim*this.proportionCoupe,A.getPointSupLeft().getY()+A.getHeight());// pour ne pas couper dans une zone interdite
+        A.setLimYDiv((int)(lim+lim*this.proportionCoupe),A.getPointSupLeft().getY()+A.getHeight());// pour ne pas couper dans une zone interdite
       A.SetDivision(A.getLimYMin() + random.nextInt(A.getLimYSup()-A.getLimYMin()));
       } else {
         A.SetDivision(A.getLimYMin() + random.nextInt(A.getLimYSup()-A.getLimYMin()));
       }
     }
   }
-*/
+
   public void chooseColor(kdTree A, kdTree child){
 
     Random random = new Random(seed);
     double a = random.nextDouble();
     double b = (1-a)/4;
 
-    this.listColor.remove(A.getColor());
+    this.verif = this.listColor.remove(A.getColor());
 
     if( a >=0 && a <= this.memCouleurProba){
       child.setColor(A.getColor());
@@ -119,9 +120,38 @@ public class MondriantTree{
       child.setColor(this.listColor.get(3));
     }
 
-    this.listColor.add(A.getColor());
+    this.verif = this.listColor.add(A.getColor());
   }
 
+  public kdTree chooseLeaf(AVL B){
+      // On peut couper la feuille? => noeud externe
+
+      if(!B.getPointer().getIsExtern()) //dans le cas le cas ou il est egal à true
+        return chooseLeaf(B.removeBiggestNode(B));
+      else{
+
+        //on est dans un noeud externe -> OUI
+        AVL leafWithTheBiggestWeight = B.max(); //getRightSon()
+
+        //est ce que on peut couper le noeud?
+        // oui
+        if(leafWithTheBiggestWeight.getPointer().getWidth() > this.minDimensionCoupe && leafWithTheBiggestWeight.getPointer().getHeight() > this.minDimensionCoupe){
+          // garder en memoire le noeud avec le poids le plus fort
+
+          //supprimer la feuille la plus lourde
+          leafWithTheBiggestWeight.removeBiggestNode(leafWithTheBiggestWeight);
+
+          //ajouter ses deux fils
+          /*addNewNode(nodeTemp.leftSon, nodeTemp.leftSon.getInformation);
+            addNewNode(nodeTemp.rightSon, nodeTemp.rightSon.getInformation);*/
+
+          return leafWithTheBiggestWeight.getPointer();
+
+        } else
+            return null;
+      }
+    }
+/*
   public BufferedImage toImage(MondrirantTree mTree){
 
     //obtenir les coordonées X,Y du point superieur gauche pour pouvoir faire nos calculs
@@ -190,35 +220,7 @@ public class MondriantTree{
     //2.2 côté droit
     toImage(mTree.fd);
 
-  }
+  }*/
+}
 
  
-  public AVL chooseLeaf(AVL B){ //on ne peut pas retourner un kdARbre pck on travaille sur un avl
-    // On peut couper la feuille? => noeud externe
-
-    if((B.getLeftSon() != null) && (B.getRightSon() != null)) //on est dans un noeud externe -> NON
-      return chooseLeaf(B.removeNodeGiven(B, B.getInformation()));
-    
-    else{
-      //on est dans un noeud externe -> OUI
-      AVL leafWithTheBiggestWeight = B.max(); //getRightSon()
-
-      //est ce que on peut couper le noeud?
-      // oui
-      if(leafWithTheBiggestWeight.getPointer().getWidth() > this.minDimensionCoupe && leafWithTheBiggestWeight.getPointer().getHeight() > this.minDimensionCoupe){
-        // garder en memoire le noeud avec le poids le plus fort
-
-        //supprimer la feuille la plus lourde
-        leafWithTheBiggestWeight.removeNodeGiven(leafWithTheBiggestWeight, leafWithTheBiggestWeight.getInformation());
-
-        //ajouter ses deux fils
-        /*addNewNode(nodeTemp.leftSon, nodeTemp.leftSon.getInformation);
-          addNewNode(nodeTemp.rightSon, nodeTemp.rightSon.getInformation);*/
-      
-        return leafWithTheBiggestWeight;
-
-      } else
-          return null;
-    } 
-  }
-}

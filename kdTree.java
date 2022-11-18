@@ -15,6 +15,7 @@ public class kdTree{
   private kdTree right;
   private int limXMin,limXSup,limYMin,limYSup; // les limites de division dans les quelles on pourra coupé
   private Pair pointSupLeft;
+  private double weight;
 
   public kdTree(int width, int height,long seed){
     this.width = width;
@@ -48,6 +49,8 @@ public class kdTree{
         this.left.setLimYDiv(this.pointSupLeft.getY(),this.pointSupLeft.getY()+this.left.getHeight());
         // pointSupLeft de l'enfant
         this.left.getPointSupLeft().setXY(this.pointSupLeft.getX(),this.pointSupLeft.getY());
+        //calcule du poids
+        this.left.setWeight();
       } else { //enfant bas
         this.right = new kdTree(this.seed);// pour être sur d'instancier l'enfant au bonne endroit
         // dimension de la division de l'enfant
@@ -58,6 +61,8 @@ public class kdTree{
         this.right.setLimYDiv(this.pointSupLeft.getY(),this.pointSupLeft.getY()+this.left.getHeight());
         // pointSupLeft de l'enfant
         this.right.getPointSupLeft().setXY(this.pointSupLeft.getX(),this.pointSupLeft.getY()+this.right.getHeight());
+        //calcule du poids
+        this.right.setWeight();
       }
     } else { //parceque y = false
       if (b) { //enfant gauche
@@ -70,6 +75,8 @@ public class kdTree{
         this.left.setLimYDiv(this.pointSupLeft.getY(),this.pointSupLeft.getY()+this.left.getHeight());
         // pointSupLeft de l'enfant
         this.left.getPointSupLeft().setXY(this.pointSupLeft.getX(),this.pointSupLeft.getY());
+        //calcule du poids
+        this.left.setWeight();
       } else {// enfant droite
         this.right = new kdTree(this.seed);// pour être sur d'instancier l'enfant au bonne endroit
         // dimension de la division de l'enfant
@@ -80,6 +87,8 @@ public class kdTree{
         this.right.setLimYDiv(this.pointSupLeft.getY(),this.pointSupLeft.getY()+this.left.getHeight());
         // pointSupLeft de l'enfant
         this.right.getPointSupLeft().setXY(this.pointSupLeft.getX()+this.right.getWidth(),this.pointSupLeft.getY());
+        //calcule du poids
+        this.right.setWeight();
       }
     }
   }
@@ -95,12 +104,20 @@ public class kdTree{
     }
   }
 
-  public double w(){
-    return this.width*this.height/Math.pow(this.width+this.height,1.5);
+  public void setWeight(){
+    this.weight = this.width*this.height/Math.pow(this.width+this.height,1.5);
+  }
+
+  public double getWeight(){
+    return this.weight;
   }
 
   public Color getColor(){
     return this.divColor;
+  }
+
+  public boolean getIsExtern(){
+    return this.isExtern;
   }
 
   public boolean  getAxe(){
@@ -155,11 +172,7 @@ public class kdTree{
     this.axe = axe;
   }
 
-  public boolean getIsExtern(){
-    return this.isExtern;
-  }
-
-  public void setIsExtern(boolean extern){
+  public void setIsextern(boolean extern){
     this.isExtern = extern;
   }
 
