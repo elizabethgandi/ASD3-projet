@@ -142,8 +142,10 @@ public class MondriantTree{
 
   public kdTree chooseLeaf(AVL B){
       // On peut couper la feuille? => noeud externe
-
-      if(!B.getPointer().getIsExtern()) //dans le cas le cas ou il est egal à true
+      if(B == null){
+        return null;
+      }
+      else if(!B.getPointer().getIsExtern()) //dans le cas le cas ou il est egal à true
         return chooseLeaf(B.maximumOfRightSubTree(B));
       else{
 
