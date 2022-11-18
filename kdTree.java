@@ -94,6 +94,7 @@ public class kdTree{
   }
 
   /**
+
   la procédure intensi l'enfant gauche ou droit et calcule les données utile à son utilisation
   **/
   public void insertion(boolean b){
@@ -110,6 +111,10 @@ public class kdTree{
 
   public double getWeight(){
     return this.weight;
+  }
+
+  public int getDivision(){
+    return this.division;
   }
 
   public Color getColor(){
