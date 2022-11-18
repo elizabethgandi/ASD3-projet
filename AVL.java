@@ -246,7 +246,7 @@ public class AVL {
       else if (A.isEmpty){
           return null;
       }
-        return removeNodeGiven(A, A.convertBiggestNodeToDoubleNode(A));
+        return removeNode(A, A.convertBiggestNodeToDoubleNode(A));
     }
 
     public AVL biggestNodeValueInAvl(AVL A){
@@ -263,7 +263,7 @@ public class AVL {
     }
     
     //enlver un noeud interne
-/*
+
     public AVL removeNode (AVL rootNodeRemove, double valueToRemove){
 
         if (rootNodeRemove == null)
@@ -285,7 +285,7 @@ public class AVL {
 
         return rootNodeRemove;
     }
-*/
+
 
 public kdTree getPointer() {
     return this.pointer;
