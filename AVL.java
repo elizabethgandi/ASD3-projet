@@ -169,11 +169,11 @@ public class AVL {
 
         /*Insert the node into the AVL tree with a simple way*/
 
-        } else if (A.getInformation()>nodeAdd.getWeight()){
+        } else if (A.getPointer().getWeight()>nodeAdd.getWeight()){
           A.setLeftSon(addNewNode2(nodeAdd.getLeft(),A.getLeftSon()));
         }
 
-        else if (A.getInformation()<=nodeAdd.getWeight()) {
+        else if (A.getPointer().getWeight()<=nodeAdd.getWeight()) {
           A.setRightSon(addNewNode2(nodeAdd.getRight(),A.getRightSon()));
         }
 
@@ -208,23 +208,23 @@ public class AVL {
         AVL maxNodeValue = root;
 
         /* Commme l'AVL est trié on est sur que la plus grande valeur est dans la branche tout à droite*/
-        while(maxNodeValue.getRighttSon() != null )
+        while(maxNodeValue.getRightSon() != null )
             maxNodeValue = maxNodeValue.getRightSon();
 
         return maxNodeValue;
     }
 
-    public AVL removeNodeGiven (AVL rootNodeRemove, int valueToRemove){
+    public AVL removeNodeGiven (AVL rootNodeRemove, double valueToRemove){
 
         AVL newNode = null;
 
         // way into the tree
         //value < value of the root
-        if (valueToRemove < rootNodeRemove.getInformation())
+        if (valueToRemove < rootNodeRemove.getPointer().getWeight())
             rootNodeRemove.setLeftSon(removeNodeGiven(rootNodeRemove.getLeftSon(), valueToRemove));
 
             //value > value of the root
-        else if (valueToRemove > rootNodeRemove.getInformation())
+        else if (valueToRemove > rootNodeRemove.getPointer().getWeight())
             rootNodeRemove.setRightSon(removeNodeGiven(rootNodeRemove.getRightSon(), valueToRemove));
 
             // the node deleted is the root
@@ -264,7 +264,7 @@ public class AVL {
 
                 //rootNodeRemove.setInformation(newRoot.getInformation());
                 //rootNodeRemove.setRightSon(removeNodeGiven(rootNodeRemove.getRightSon(), newRoot.getInformation()));
-                rootNodeRemove.setRightSon(removeNodeGiven(rootNodeRemove.getRightSon(), newRoot.getInformation()));
+                rootNodeRemove.setRightSon(removeNodeGiven(rootNodeRemove.getRightSon(), newRoot.getPointer().getWeight()));
             }
         }
         return rootNodeRemove;
@@ -276,23 +276,33 @@ public class AVL {
       if (A.getIsEmpty()){
           return removeBiggestNode(A.getRightSon());
       }
-      else if (A.isEmpty()){
+      else if (A.isEmpty){
           return null;
       }
-        return removeNodeGiven(A, A.biggestNodeValueInAvl(A));
+        return removeNodeGiven(A, A.convertBiggestNodeToDoubleNode(A));
     }
 
-    public int biggestNodeValueInAvl(AVL A){
+    public AVL biggestNodeValueInAvl(AVL A){
 
-        if (A.isEmpty)
-            return 0; 
-       
-        return A.setRightSon(biggestNodeValueInAvl(A.getRightSon()));
+        AVL B = A;
+
+        if (B.isEmpty)
+            return null; 
+
+        else{
+            B = biggestNodeValueInAvl(B.getRightSon());
+        }
+        return B;//B.getPointer().getWeight();
+    }
+
+    public double convertBiggestNodeToDoubleNode(AVL B){
+        AVL A = biggestNodeValueInAvl(B);
+        return A.getPointer().getWeight();
     }
     
     //enlver un noeud interne
 
-    public AVL removeNode (AVL rootNodeRemove, int valueToRemove){
+    public AVL removeNode (AVL rootNodeRemove, double valueToRemove){
 
         if (rootNodeRemove == null)
             return null; // because rootNodeRemove is always equals to null
