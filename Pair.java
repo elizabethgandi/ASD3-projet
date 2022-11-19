@@ -11,11 +11,14 @@ public class Pair{
     this.selec = selec;
   }
 
-  public Pair(int dimX,int dimY){
-    this.dimX = dimX;
-    this.dimY = dimY;
+  public Pair(int x,int y){
+    this.x = x;
+    this.y = y;
   }
 
+  public Pair(){
+    
+  }
 
   public Pair getDim(){
     return this.dim;
@@ -26,11 +29,24 @@ public class Pair{
   }
 
   public int getX(){
-    return this.X;
+    return this.y;
   }
 
   public int getY(){
-    return this.Y;
+    return this.y;
+  }
+
+  public void setX(int x){
+    this.x = x;
+  }
+
+  public void SetY(int y){
+    this.y = y;
+  }
+
+  public void setXY(int x,int y){
+    this.x = x;
+    this.y = y;
   }
 
 }
