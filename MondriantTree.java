@@ -88,31 +88,39 @@ public class MondriantTree{
     A.setAxe(a <= this.width/(this.width+this.height));
 
     if(A.getAxe()){
-      if(A.getPointSupLeft().getY()+this.height == A.getHeight()){ // alors la division est frontaliere et en bas
+      if(this.width-A.getPointSupLeft().getX() == A.getWidth()){ // alors la division est frontaliere et en droite
         int lim = A.getPointSupLeft().getX()+A.getWidth(); //pour la clarté du code
         A.setLimXDiv(A.getPointSupLeft().getX(),(int)(lim-this.proportionCoupe*lim));// pour ne pas couper dans une zone interdite
         A.SetDivision(A.getLimXMin() + random.nextInt(A.getLimXSup()-A.getLimXMin()));
         System.out.println("axe x1");
-      }else if(A.getHeight() == this.height - (A.getPointSupLeft().getY()+A.getHeight())){// alors la division est frontaliere et en haut
+      }else if(A.getPointSupLeft().getX() == 0){// alors la division est frontaliere et a gauche
         int lim = A.getPointSupLeft().getX();//pour la clarté du code
         A.setLimXDiv((int)(lim+lim*this.proportionCoupe),A.getPointSupLeft().getX()+A.getWidth());// pour ne pas couper dans une zone interdite
         A.SetDivision(A.getLimXMin() + random.nextInt(A.getLimXSup()-A.getLimXMin()));
         System.out.println("axe x2");
+      } else if(this.width-A.getPointSupLeft().getX() == A.getWidth() && A.getPointSupLeft().getX() == 0){ // la zone est toute la largeur
+        int lim = A.getPointSupLeft().getX();//pour la clarté du code
+        int lim2 = A.getPointSupLeft().getX()+A.getWidth();//pour la clarté du code
+        A.setLimYDiv((int)(lim+lim*this.proportionCoupe),(int)(lim2-lim2*this.proportionCoupe));
       } else {
         System.out.println("axe x3");
         A.SetDivision(A.getLimXMin() + random.nextInt(A.getLimXSup()-A.getLimXMin()));
       }
     } else {
-      if(A.getPointSupLeft().getX()+this.width == A.getWidth()){ // alors la division est frontaliere et a droite
+      if(this.height-A.getPointSupLeft().getY() == A.getHeight()){ // alors la division est frontaliere et a bas
         int lim = A.getPointSupLeft().getY()+A.getHeight();//pour la clarté du code
         A.setLimYDiv(A.getPointSupLeft().getY(),(int)(lim-lim*this.proportionCoupe));// pour ne pas couper dans une zone interdite
         A.SetDivision(A.getLimYMin() + random.nextInt(A.getLimYSup()-A.getLimYMin()));
         System.out.println("axe y1");
-      } else if(A.getWidth() == this.width - (A.getPointSupLeft().getX()+A.getWidth())){// alors la division est frontaliere et a droite
+      } else if(A.getPointSupLeft().getY() == 0){// alors la division est frontaliere et en haut
         int lim = A.getPointSupLeft().getY();//pour la clarté du code
         A.setLimYDiv((int)(lim+lim*this.proportionCoupe),A.getPointSupLeft().getY()+A.getHeight());// pour ne pas couper dans une zone interdite
-      A.SetDivision(A.getLimYMin() + random.nextInt(A.getLimYSup()-A.getLimYMin()));
-      System.out.println("axe y2");
+        A.SetDivision(A.getLimYMin() + random.nextInt(A.getLimYSup()-A.getLimYMin()));
+        System.out.println("axe y2");
+      } else if(this.height-A.getPointSupLeft().getY() == A.getHeight() && A.getPointSupLeft().getY() == 0){  // la zone est toute la longuer
+        int lim = A.getPointSupLeft().getY();//pour la clarté du code
+        int lim2 = A.getPointSupLeft().getY()+A.getHeight();//pour la clarté du code
+        A.setLimYDiv((int)(lim+lim*this.proportionCoupe),(int)(lim2-lim2*this.proportionCoupe));
       } else {
         int difference = A.getLimYSup()-A.getLimYMin();
         System.out.println(difference + "axe y3");
