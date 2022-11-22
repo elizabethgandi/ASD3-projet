@@ -1,4 +1,5 @@
 public class AVL {
+    //payate
 
     private kdTree pointer ;
     private int valueOfTheBalance;
@@ -253,7 +254,7 @@ public class AVL {
 
         AVL B = A;
 
-        if (B.isEmpty)
+        if (B.getIsEmpty())
             return null; 
 
         else{
