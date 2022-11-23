@@ -79,7 +79,7 @@ public class MondriantTree{
 
     A.setAxe(a <= this.width/(this.width+this.height));
 
-    if(A.getAxe()){
+    if(!A.getAxe()){
       if(this.width-A.getPointSupLeft().getX() == A.getWidth()){ // alors la division est frontaliere et en droite
         int lim = A.getPointSupLeft().getX()+A.getWidth(); //pour la clarté du code
         A.setLimXDiv(A.getPointSupLeft().getX(),(int)(lim-this.proportionCoupe*lim));// pour ne pas couper dans une zone interdite

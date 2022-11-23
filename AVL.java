@@ -167,14 +167,19 @@ public class AVL {
         return minNodeValue;
     }
 
-    public AVL maximumOfRightSubTree(AVL root){
-        AVL maxNodeValue = root;
+    public AVLFusion maximumOfRightSubTree(AVLFusion root){
+        if(root == null){
+            return null;
+        }else {
+            AVLFusion maxNodeValue = root;
 
-        /* Commme l'AVL est trié on est sur que la plus grande valeur est dans la branche tout à droite*/
-        while(maxNodeValue.getRightSon() != null )
-            maxNodeValue = maxNodeValue.getRightSon();
+            /* Commme l'AVL est trié on est sur que la plus grande valeur est dans la branche tout à droite*/
+            while (maxNodeValue.getRightSon() != null)
+                maxNodeValue = maxNodeValue.getRightSon();
 
-        return removeNode(maxNodeValue, maxNodeValue.convertBiggestNodeToDoubleNode(maxNodeValue));
+            System.out.println("test1 =>  " + maxNodeValue.getInformation());
+            return removeNodeGiven(maxNodeValue, maxNodeValue.getInformation());
+        }
     }
 
     public AVL removeNodeGiven (AVL rootNodeRemove, double valueToRemove){
@@ -267,9 +272,9 @@ public class AVL {
 
     public AVL removeNode (AVL rootNodeRemove, double valueToRemove){
 
-        if (rootNodeRemove == null)
+        if (rootNodeRemove == null){
             return null; // because rootNodeRemove is always equals to null
-
+        }
            // replace the older root by the new one
         rootNodeRemove = removeNodeGiven(rootNodeRemove, valueToRemove);
 
